@@ -1,0 +1,58 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px 3px 6px;
+  border-radius: var(--radius-pill);
+  background: white;
+  border: 1.5px solid var(--rule-md);
+  font-family: var(--font-tight);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s;
+  max-width: 140px;
+}
+
+.chip:hover {
+  box-shadow: var(--shadow);
+  border-color: var(--ink-faint);
+}
+
+.chip.selected {
+  border-color: var(--cobalt);
+  box-shadow: 0 0 0 2px rgba(45, 91, 227, 0.25), var(--shadow);
+}
+
+.chip:active {
+  transform: scale(0.97);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-color, var(--ink-faint));
+  flex-shrink: 0;
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Size variants */
+.sm {
+  font-size: 10px;
+  padding: 2px 6px 2px 5px;
+  gap: 4px;
+  max-width: 110px;
+}
+
+.sm .dot {
+  width: 6px;
+  height: 6px;
+}

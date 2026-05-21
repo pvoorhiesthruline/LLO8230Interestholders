@@ -1,0 +1,330 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  min-height: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-tight);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  flex: 1;
+}
+
+.count {
+  font-family: var(--font-tight);
+  font-size: 11px;
+  color: var(--ink-faint);
+  background: var(--paper-warm);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-pill);
+  padding: 1px 8px;
+}
+
+.addBtn {
+  font-family: var(--font-tight);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cobalt);
+  background: none;
+  border: 1.5px solid var(--cobalt);
+  border-radius: var(--radius-pill);
+  padding: 3px 12px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.addBtn:hover {
+  background: var(--cobalt);
+  color: white;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding-right: 2px;
+}
+
+.item {
+  border-radius: var(--radius);
+  border: 1.5px solid transparent;
+  background: white;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  overflow: hidden;
+}
+
+.item:hover {
+  border-color: var(--rule-md);
+}
+
+.itemSelected {
+  border-color: var(--cobalt) !important;
+  box-shadow: 0 0 0 2px rgba(45, 91, 227, 0.12);
+}
+
+.itemMain {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.itemDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.itemName {
+  flex: 1;
+  font-family: var(--font-tight);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.levelBadge {
+  font-family: var(--font-tight);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--badge-color);
+  background: var(--badge-bg);
+  border-radius: var(--radius-pill);
+  padding: 2px 7px;
+  flex-shrink: 0;
+  border: 1px solid var(--badge-color);
+  opacity: 0.85;
+}
+
+.roleBadge {
+  font-size: 10px;
+  color: var(--ink-faint);
+  background: var(--paper-warm);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-pill);
+  padding: 1px 7px;
+  flex-shrink: 0;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--ink-faint);
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+
+.editBtn:hover {
+  color: var(--cobalt);
+  background: var(--paper-warm);
+}
+
+.notes {
+  font-size: 12px;
+  color: var(--ink-muted);
+  padding: var(--space-1) var(--space-3) var(--space-2) calc(var(--space-3) + 18px);
+  line-height: 1.5;
+  border-top: 1px solid var(--rule);
+}
+
+.emptyState {
+  font-size: 13px;
+  color: var(--ink-faint);
+  padding: var(--space-4);
+  text-align: center;
+  border: 1.5px dashed var(--rule-md);
+  border-radius: var(--radius);
+}
+
+/* Forms */
+.addForm,
+.editForm {
+  background: var(--paper-warm);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--cobalt);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.editForm {
+  border-color: var(--rule-md);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+}
+
+.formRow2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 100px;
+}
+
+.label {
+  font-family: var(--font-tight);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.input {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--rule-md);
+  background: white;
+  font-size: 13px;
+  color: var(--ink);
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--cobalt);
+  outline: none;
+}
+
+.select {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--rule-md);
+  background: white;
+  font-size: 12px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.textarea {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--rule-md);
+  background: white;
+  font-size: 12px;
+  color: var(--ink);
+  resize: vertical;
+  line-height: 1.5;
+  transition: border-color 0.15s;
+}
+
+.textarea:focus {
+  border-color: var(--cobalt);
+  outline: none;
+}
+
+.colorPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sw);
+  border: 2px solid transparent;
+  transition: transform 0.1s, border-color 0.15s;
+}
+
+.swatch:hover {
+  transform: scale(1.15);
+}
+
+.swatchActive {
+  border-color: var(--ink);
+  transform: scale(1.15);
+}
+
+.formActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.btnGhost {
+  font-family: var(--font-tight);
+  font-size: 12px;
+  font-weight: 600;
+  background: none;
+  border: 1.5px solid var(--rule-md);
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+  color: var(--ink-muted);
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btnGhost:hover {
+  border-color: var(--ink-muted);
+  color: var(--ink);
+}
+
+.btnDanger {
+  color: #B91C1C;
+  border-color: #FCA5A5;
+}
+
+.btnDanger:hover {
+  background: #FEF2F2;
+  border-color: #B91C1C;
+}
+
+.btnPrimary {
+  font-family: var(--font-tight);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--cobalt);
+  border: 1.5px solid var(--cobalt);
+  border-radius: var(--radius-pill);
+  padding: 4px 16px;
+  color: white;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: #2451c7;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

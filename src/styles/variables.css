@@ -1,0 +1,53 @@
+:root {
+  /* Thruline brand */
+  --forest-teal:  #0E6B5E;
+  --neo-mint:     #10B981;
+  --aqua-foam:    #6EE7C7;
+  --navy:         #1B1F4B;
+  --cobalt:       #2D5BE3;
+  --sky:          #5B9BF0;
+  --veri-peri:    #6B4FD8;
+  --periwinkle:   #A78BFA;
+  --blue-iris:    #3D4EBF;
+  --ink:          #0B1220;
+  --ink-muted:    #4B5563;
+  --ink-faint:    #9CA3AF;
+  --paper:        #FAFAF7;
+  --paper-warm:   #F3F1EA;
+  --paper-dark:   #0E1530;
+  --rule:         rgba(11, 18, 32, 0.08);
+  --rule-md:      rgba(11, 18, 32, 0.14);
+
+  /* Blast radius ring colors */
+  --br-critical:  #C0392B;
+  --br-high:      #D97706;
+  --br-medium:    #2D5BE3;
+  --br-low:       #475569;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Typography */
+  --font-tight: 'Inter Tight', system-ui, sans-serif;
+  --font-body:  'Inter', system-ui, sans-serif;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius:    8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(11, 18, 32, 0.06);
+  --shadow:    0 2px 8px rgba(11, 18, 32, 0.10);
+  --shadow-lg: 0 4px 16px rgba(11, 18, 32, 0.12);
+}

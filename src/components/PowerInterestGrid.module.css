@@ -1,0 +1,120 @@
+.wrapper {
+  display: flex;
+  gap: var(--space-2);
+  width: 100%;
+  height: 100%;
+}
+
+.axisLabelY {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-tight);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0 var(--space-1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.axisArrow {
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.gridCol {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--space-2);
+  min-height: 0;
+}
+
+.grid {
+  position: relative;
+  flex: 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1.5px solid var(--rule-md);
+  background: var(--paper-warm);
+  min-height: 320px;
+  box-shadow: var(--shadow-sm);
+}
+
+.quadrant {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-2) var(--space-3);
+  pointer-events: none;
+}
+
+.quadrantLabel {
+  font-family: var(--font-tight);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.quadrantSub {
+  font-size: 10px;
+  color: var(--ink-faint);
+  margin-top: 1px;
+}
+
+.axisH {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  background: var(--rule-md);
+  pointer-events: none;
+}
+
+.axisV {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1.5px;
+  background: var(--rule-md);
+  pointer-events: none;
+}
+
+.chipWrapper {
+  position: absolute;
+  transform: translateX(-50%);
+  cursor: grab;
+  z-index: 10;
+  user-select: none;
+}
+
+.chipWrapper:active {
+  cursor: grabbing;
+  z-index: 20;
+}
+
+.axisLabelX {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-tight);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0 var(--space-2);
+  flex-shrink: 0;
+}
