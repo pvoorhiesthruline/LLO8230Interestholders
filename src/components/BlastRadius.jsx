@@ -42,7 +42,6 @@ function chipPos(level, index, total, w, h) {
 export default function BlastRadius({ stakeholders, programName, selectedId, onSelect, onUpdate }) {
   const svgRef = useRef(null)
   const activeId = useRef(null)
-  const captureRef = useRef(null)
   const [svgSize, setSvgSize] = useState({ width: 400, height: 400 })
   const [draggingId, setDraggingId] = useState(null)
   const [ghost, setGhost] = useState(null)
@@ -59,19 +58,6 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
     const ro = new ResizeObserver(update)
     ro.observe(svgRef.current)
     return () => ro.disconnect()
-  }, [])
-
-  const exportPng = useCallback(async () => {
-    if (!captureRef.current) return
-    const { toPng } = await import('html-to-image')
-    const dataUrl = await toPng(captureRef.current, {
-      pixelRatio: 2,
-      backgroundColor: '#FBFAF7',
-    })
-    const a = document.createElement('a')
-    a.download = 'blast-radius.png'
-    a.href = dataUrl
-    a.click()
   }, [])
 
   const byLevel = {}
@@ -131,8 +117,7 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
   }, [onUpdate, onSelect])
 
   return (
-    <>
-    <div className={styles.layout} ref={captureRef}>
+    <div className={styles.layout}>
       {/* Ghost chip follows cursor during drag */}
       {ghost && (
         <div
@@ -291,9 +276,5 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
         })}
       </div>
     </div>
-    <div className={['no-print', styles.exportRow].join(' ')}>
-      <button className={styles.exportBtn} onClick={exportPng}>⬇ Export as image</button>
-    </div>
-    </>
   )
 }

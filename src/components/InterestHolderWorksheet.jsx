@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import useStakeholders from '../hooks/useStakeholders'
 import PowerInterestGrid from './PowerInterestGrid'
 import BlastRadius from './BlastRadius'
@@ -10,6 +10,29 @@ export default function InterestHolderWorksheet() {
   const [selectedId, setSelectedId] = useState(null)
   const [activeTab, setActiveTab] = useState('grid')
   const [editingTitle, setEditingTitle] = useState(false)
+
+  const gridCaptureRef = useRef(null)
+  const blastCaptureRef = useRef(null)
+
+  const exportGrid = useCallback(async () => {
+    if (!gridCaptureRef.current) return
+    const { toPng } = await import('html-to-image')
+    const dataUrl = await toPng(gridCaptureRef.current, { pixelRatio: 2, backgroundColor: '#FBFAF7' })
+    const a = document.createElement('a')
+    a.download = 'power-interest-grid.png'
+    a.href = dataUrl
+    a.click()
+  }, [])
+
+  const exportBlast = useCallback(async () => {
+    if (!blastCaptureRef.current) return
+    const { toPng } = await import('html-to-image')
+    const dataUrl = await toPng(blastCaptureRef.current, { pixelRatio: 2, backgroundColor: '#FBFAF7' })
+    const a = document.createElement('a')
+    a.download = 'blast-radius.png'
+    a.href = dataUrl
+    a.click()
+  }, [])
 
   const handleSelect = (id) => setSelectedId(id === selectedId ? null : id)
 
@@ -114,21 +137,32 @@ export default function InterestHolderWorksheet() {
             {(activeTab === 'grid' || activeTab === 'both') && (
               <section className={styles.panel}>
                 <div className={styles.panelHeader}>
-                  <h2 className={styles.panelTitle}>Power-Interest Grid</h2>
-                  <p className={styles.panelSub}>
-                    Drag stakeholders to position them by power and interest.
-                  </p>
+                  <div className={styles.panelHeaderText}>
+                    <h2 className={styles.panelTitle}>Power-Interest Grid</h2>
+                    <p className={styles.panelSub}>
+                      Drag stakeholders to position them by power and interest.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className={[styles.exportBtn, 'no-print'].join(' ')}
+                    onClick={exportGrid}
+                  >
+                    ⬇ Export as image
+                  </button>
                 </div>
-                <div className={styles.gridContainer}>
-                  <PowerInterestGrid
-                    stakeholders={stakeholders}
-                    selectedId={selectedId}
-                    onSelect={handleSelect}
-                    onUpdate={update}
-                  />
-                </div>
-                <div className={styles.quadrantKey}>
-                  <QuadrantKey />
+                <div ref={gridCaptureRef}>
+                  <div className={styles.gridContainer}>
+                    <PowerInterestGrid
+                      stakeholders={stakeholders}
+                      selectedId={selectedId}
+                      onSelect={handleSelect}
+                      onUpdate={update}
+                    />
+                  </div>
+                  <div className={styles.quadrantKey}>
+                    <QuadrantKey />
+                  </div>
                 </div>
               </section>
             )}
@@ -137,18 +171,29 @@ export default function InterestHolderWorksheet() {
             {(activeTab === 'blast' || activeTab === 'both') && (
               <section className={styles.panel}>
                 <div className={styles.panelHeader}>
-                  <h2 className={styles.panelTitle}>Blast Radius</h2>
-                  <p className={styles.panelSub}>
-                    Drag interest holders onto a ring to update their impact level.
-                  </p>
+                  <div className={styles.panelHeaderText}>
+                    <h2 className={styles.panelTitle}>Blast Radius</h2>
+                    <p className={styles.panelSub}>
+                      Drag interest holders onto a ring to update their impact level.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className={[styles.exportBtn, 'no-print'].join(' ')}
+                    onClick={exportBlast}
+                  >
+                    ⬇ Export as image
+                  </button>
                 </div>
-                <BlastRadius
-                  stakeholders={stakeholders}
-                  programName={programName}
-                  selectedId={selectedId}
-                  onSelect={handleSelect}
-                  onUpdate={update}
-                />
+                <div ref={blastCaptureRef}>
+                  <BlastRadius
+                    stakeholders={stakeholders}
+                    programName={programName}
+                    selectedId={selectedId}
+                    onSelect={handleSelect}
+                    onUpdate={update}
+                  />
+                </div>
               </section>
             )}
           </div>
