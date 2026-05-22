@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react'
+import { useRef, useState, useCallback, useLayoutEffect } from 'react'
 import ChartChip from './ChartChip'
 import { toPixelPos, fromPixelPos } from '../utils/gridUtils'
 import { QUADRANT_META } from '../data/palette'
@@ -10,6 +10,19 @@ const CHIP_OFFSET = 10 // half-height of chip for centering
 export default function PowerInterestGrid({ stakeholders, selectedId, onSelect, onUpdate }) {
   const gridRef = useRef(null)
   const dragging = useRef(null)
+  const [gridSize, setGridSize] = useState({ width: 0, height: 0 })
+
+  useLayoutEffect(() => {
+    if (!gridRef.current) return
+    const update = () => {
+      const { width, height } = gridRef.current.getBoundingClientRect()
+      setGridSize({ width, height })
+    }
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(gridRef.current)
+    return () => ro.disconnect()
+  }, [])
 
   const startDrag = useCallback((e, id) => {
     e.preventDefault()
@@ -75,11 +88,8 @@ export default function PowerInterestGrid({ stakeholders, selectedId, onSelect, 
           <div className={styles.axisV} />
 
           {/* Chips */}
-          {stakeholders.map((s) => {
-            const el = gridRef.current
-            const w = el ? el.offsetWidth : 600
-            const h = el ? el.offsetHeight : 480
-            const { x, y } = toPixelPos(s.interest, s.power, w, h, PADDING)
+          {gridSize.width > 0 && stakeholders.map((s) => {
+            const { x, y } = toPixelPos(s.interest, s.power, gridSize.width, gridSize.height, PADDING)
             return (
               <div
                 key={s.id}
