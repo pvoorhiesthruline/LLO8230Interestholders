@@ -18,17 +18,10 @@ export default function InterestHolderWorksheet() {
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerLeft}>
-          <div className={styles.wordmark}>
-            <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
-              <rect width="32" height="32" rx="6" fill="#946E24" />
-              <path d="M8 8 L16 22 L24 8" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            </svg>
-            <span className={styles.wordmarkText}>Vanderbilt</span>
-          </div>
           <div className={styles.titleBlock}>
             <h1 className={styles.titleMain}>Interest Holder Mapping</h1>
             <div className={styles.titleMeta}>
-              <span className={styles.badge}>LLO 8230</span>
+              <span className={styles.badge}>LLO 8230 · Program Evaluation</span>
               <span className={styles.badgeSep}>·</span>
               <span className={styles.badgeLight}>Vanderbilt Peabody College</span>
             </div>
