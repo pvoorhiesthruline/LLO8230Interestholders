@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useLayoutEffect } from 'react'
 import ChartChip from './ChartChip'
 import { BLAST_RADIUS_LEVELS, BLAST_RADIUS_META } from '../data/palette'
 import styles from './BlastRadius.module.css'
@@ -9,6 +9,8 @@ const RINGS = [
   { level: 'medium',   r: 0.68 },
   { level: 'low',      r: 0.90 },
 ]
+
+const RING_RADII = { critical: 0.24, high: 0.46, medium: 0.68, low: 0.90 }
 
 function hitLevel(svgEl, clientX, clientY) {
   const rect = svgEl.getBoundingClientRect()
@@ -26,12 +28,37 @@ function overSvg(svgEl, clientX, clientY) {
   return clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom
 }
 
+// Distribute n chips evenly around a ring, starting at 45° (bottom-right in SVG coords)
+// to stay clear of the ring label which sits at the top (270°).
+function chipPos(level, index, total, w, h) {
+  const r = RING_RADII[level]
+  const angle = Math.PI / 4 + (2 * Math.PI * index) / Math.max(total, 1)
+  return {
+    x: (r * Math.cos(angle) + 1) / 2 * w,
+    y: (r * Math.sin(angle) + 1) / 2 * h,
+  }
+}
+
 export default function BlastRadius({ stakeholders, programName, selectedId, onSelect, onUpdate }) {
   const svgRef = useRef(null)
   const activeId = useRef(null)
+  const [svgSize, setSvgSize] = useState({ width: 400, height: 400 })
   const [draggingId, setDraggingId] = useState(null)
   const [ghost, setGhost] = useState(null)
   const [hoverLevel, setHoverLevel] = useState(null)
+
+  // Keep svgSize in sync with actual rendered dimensions
+  useLayoutEffect(() => {
+    if (!svgRef.current) return
+    const update = () => {
+      const { width, height } = svgRef.current.getBoundingClientRect()
+      setSvgSize({ width, height })
+    }
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(svgRef.current)
+    return () => ro.disconnect()
+  }, [])
 
   const byLevel = {}
   BLAST_RADIUS_LEVELS.forEach((l) => { byLevel[l] = [] })
@@ -107,7 +134,7 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
         </div>
       )}
 
-      {/* SVG diagram */}
+      {/* SVG diagram + chips overlaid on rings */}
       <div className={styles.svgWrap}>
         <svg
           ref={svgRef}
@@ -118,7 +145,7 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
         >
           {[...RINGS].reverse().map(({ level, r }) => {
             const isHovered = hoverLevel === level
-            const dimmed = draggingId && !isHovered
+            const dimmed = !!draggingId && !isHovered
             return (
               <circle
                 key={level}
@@ -134,14 +161,12 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
             )
           })}
 
-          {/* Epicenter dot */}
           <circle cx={0} cy={0} r={0.12}
             fill={`${BLAST_RADIUS_META.critical.color}18`}
             stroke={BLAST_RADIUS_META.critical.color}
             strokeWidth={0.018}
           />
 
-          {/* Spoke lines at 45° intervals */}
           {[0, 45, 90, 135].map((deg) => {
             const rad = (deg * Math.PI) / 180
             const x = Math.cos(rad) * 0.90
@@ -152,7 +177,6 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
             )
           })}
 
-          {/* Ring labels */}
           {RINGS.map(({ level, r }) => (
             <text key={level}
               x={0} y={-(r - 0.03)}
@@ -167,7 +191,6 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
             </text>
           ))}
 
-          {/* Epicenter text */}
           <text x={0} y={-0.005}
             textAnchor="middle"
             fontSize={0.065}
@@ -190,9 +213,37 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
             </text>
           )}
         </svg>
+
+        {/* Chips live on the rings */}
+        {BLAST_RADIUS_LEVELS.flatMap(level =>
+          byLevel[level].map((s, i) => {
+            const { x, y } = chipPos(level, i, byLevel[level].length, svgSize.width, svgSize.height)
+            return (
+              <div
+                key={s.id}
+                className={styles.chipOnRing}
+                style={{
+                  left: x,
+                  top: y,
+                  opacity: draggingId === s.id ? 0.2 : 1,
+                  zIndex: selectedId === s.id ? 5 : 2,
+                }}
+                onMouseDown={(e) => startDrag(e, s)}
+                onTouchStart={(e) => startDrag(e, s)}
+              >
+                <ChartChip
+                  name={s.name}
+                  color={s.color}
+                  size="sm"
+                  selected={s.id === selectedId}
+                />
+              </div>
+            )
+          })
+        )}
       </div>
 
-      {/* Grouped chip legend */}
+      {/* Text legend — read-only reference */}
       <div className={styles.legend}>
         {BLAST_RADIUS_LEVELS.map((level) => {
           const items = byLevel[level]
@@ -205,26 +256,20 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
                 <span className={styles.groupCount}>{items.length}</span>
               </div>
               {items.length === 0 ? (
-                <p className={styles.empty}>No stakeholders assigned</p>
+                <p className={styles.empty}>None assigned</p>
               ) : (
-                <div className={styles.chips}>
+                <ul className={styles.nameList}>
                   {items.map((s) => (
-                    <div
+                    <li
                       key={s.id}
-                      className={styles.dragHandle}
-                      style={{ opacity: draggingId === s.id ? 0.25 : 1 }}
-                      onMouseDown={(e) => startDrag(e, s)}
-                      onTouchStart={(e) => startDrag(e, s)}
+                      className={[styles.nameItem, selectedId === s.id ? styles.nameItemSelected : ''].filter(Boolean).join(' ')}
+                      onClick={() => onSelect(s.id)}
                     >
-                      <ChartChip
-                        name={s.name}
-                        color={s.color}
-                        size="sm"
-                        selected={s.id === selectedId}
-                      />
-                    </div>
+                      <span className={styles.nameDot} style={{ background: s.color }} />
+                      {s.name}
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
             </div>
           )
