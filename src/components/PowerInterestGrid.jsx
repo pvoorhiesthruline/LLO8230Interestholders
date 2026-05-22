@@ -10,6 +10,7 @@ const CHIP_OFFSET = 10 // half-height of chip for centering
 export default function PowerInterestGrid({ stakeholders, selectedId, onSelect, onUpdate }) {
   const gridRef = useRef(null)
   const dragging = useRef(null)
+  const captureRef = useRef(null)
   const [gridSize, setGridSize] = useState({ width: 0, height: 0 })
 
   useLayoutEffect(() => {
@@ -55,6 +56,19 @@ export default function PowerInterestGrid({ stakeholders, selectedId, onSelect, 
     window.addEventListener('touchend', onUp)
   }, [onSelect, onUpdate])
 
+  const exportPng = useCallback(async () => {
+    if (!captureRef.current) return
+    const { toPng } = await import('html-to-image')
+    const dataUrl = await toPng(captureRef.current, {
+      pixelRatio: 2,
+      backgroundColor: '#FBFAF7',
+    })
+    const a = document.createElement('a')
+    a.download = 'power-interest-grid.png'
+    a.href = dataUrl
+    a.click()
+  }, [])
+
   const quadrants = [
     { key: 'high-high', label: 'High Power · High Interest', style: { top: 0, left: '50%', width: '50%', height: '50%' } },
     { key: 'high-low',  label: 'High Power · Low Interest',  style: { top: 0, left: 0, width: '50%', height: '50%' } },
@@ -63,7 +77,8 @@ export default function PowerInterestGrid({ stakeholders, selectedId, onSelect, 
   ]
 
   return (
-    <div className={styles.wrapper}>
+    <>
+    <div className={styles.wrapper} ref={captureRef}>
       <div className={styles.axisLabelY}>
         <span>Power</span>
         <span className={styles.axisArrow}>↑ High</span>
@@ -116,5 +131,9 @@ export default function PowerInterestGrid({ stakeholders, selectedId, onSelect, 
         </div>
       </div>
     </div>
+    <div className={['no-print', styles.exportRow].join(' ')}>
+      <button className={styles.exportBtn} onClick={exportPng}>⬇ Export as image</button>
+    </div>
+    </>
   )
 }
