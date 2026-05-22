@@ -1,63 +1,59 @@
-// Thruline brand color palette
+// Vanderbilt University brand palette
 export const BRAND = {
-  forestTeal: '#0E6B5E',
-  neoMint:    '#10B981',
-  aquaFoam:   '#6EE7C7',
-  navy:       '#1B1F4B',
-  cobalt:     '#2D5BE3',
-  sky:        '#5B9BF0',
-  veriPeri:   '#6B4FD8',
-  periwinkle: '#A78BFA',
-  blueIris:   '#3D4EBF',
-  ink:        '#0B1220',
-  inkDeep:    '#06091A',
-  paper:      '#FAFAF7',
-  paperWarm:  '#F3F1EA',
-  paperDark:  '#0E1530',
+  gold:    '#CFAE70',
+  goldD:   '#B49248',
+  oak:     '#946E24',
+  black:   '#1C1C1C',
+  ink:     '#2A2825',
+  cream:   '#F5F3EF',
+  paper:   '#FBFAF7',
+  sand:    '#E0D5C0',
+  rule:    '#D8D2C5',
+  muted:   '#6F6A60',
 }
 
 // Chip colors available when adding stakeholders
 export const CHIP_COLORS = [
-  { label: 'Teal',       value: '#0E6B5E' },
-  { label: 'Mint',       value: '#10B981' },
-  { label: 'Cobalt',     value: '#2D5BE3' },
-  { label: 'Sky',        value: '#5B9BF0' },
-  { label: 'Violet',     value: '#6B4FD8' },
-  { label: 'Periwinkle', value: '#A78BFA' },
-  { label: 'Rose',       value: '#E45B8B' },
-  { label: 'Amber',      value: '#D97706' },
-  { label: 'Slate',      value: '#475569' },
-  { label: 'Navy',       value: '#1B1F4B' },
+  { label: 'Gold',        value: '#CFAE70' },
+  { label: 'Oak',         value: '#946E24' },
+  { label: 'Warm Brown',  value: '#8B5E3C' },
+  { label: 'Sage',        value: '#4A7C59' },
+  { label: 'Forest',      value: '#2D5F3F' },
+  { label: 'Teal',        value: '#1A6B6B' },
+  { label: 'Slate Blue',  value: '#3B5B8C' },
+  { label: 'Rose',        value: '#C0524F' },
+  { label: 'Charcoal',    value: '#3D3D3D' },
+  { label: 'Plum',        value: '#6B5B8C' },
 ]
 
 export const BLAST_RADIUS_LEVELS = ['critical', 'high', 'medium', 'low']
 
 export const BLAST_RADIUS_META = {
-  critical: { label: 'Critical',  color: '#C0392B', bg: '#FEF2F2' },
-  high:     { label: 'High',      color: '#D97706', bg: '#FFFBEB' },
-  medium:   { label: 'Medium',    color: '#2D5BE3', bg: '#EEF2FF' },
-  low:      { label: 'Low',       color: '#475569', bg: '#F8FAFC' },
+  critical: { label: 'Critical', color: '#9B2226', bg: '#FDF0EF' },
+  high:     { label: 'High',     color: '#AE5A1A', bg: '#FBF3E8' },
+  medium:   { label: 'Medium',   color: '#2D6B8C', bg: '#EDF4F8' },
+  low:      { label: 'Low',      color: '#4A5568', bg: '#F5F3EF' },
 }
 
 export const QUADRANT_META = {
   'high-high': {
     label: 'Manage Closely',
     sub:   'Actively engage',
-    bg:    '#EFF6FF',
+    bg:    '#FAF3E0',
   },
   'high-low': {
     label: 'Keep Satisfied',
     sub:   'Meet their needs',
-    bg:    '#F0FDF4',
+    bg:    '#F5F3EF',
   },
   'low-high': {
     label: 'Keep Informed',
     sub:   'Regular updates',
-    bg:    '#FDF4FF',
+    bg:    '#EEF4F8',
   },
   'low-low': {
     label: 'Monitor',
     sub:   'Minimal effort',
-    bg:    '#F8FAFC',
+    bg:    '#FBFAF7',
   },
 }

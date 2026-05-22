@@ -20,11 +20,10 @@ export default function InterestHolderWorksheet() {
         <div className={styles.headerLeft}>
           <div className={styles.wordmark}>
             <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
-              <rect width="32" height="32" rx="6" fill="#0E6B5E" />
-              <path d="M8 10h16M16 10v12" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-              <circle cx="16" cy="24" r="2" fill="#6EE7C7" />
+              <rect width="32" height="32" rx="6" fill="#946E24" />
+              <path d="M8 8 L16 22 L24 8" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
             </svg>
-            <span className={styles.wordmarkText}>Thruline</span>
+            <span className={styles.wordmarkText}>Vanderbilt</span>
           </div>
           <div className={styles.titleBlock}>
             <h1 className={styles.titleMain}>Interest Holder Mapping</h1>
@@ -201,7 +200,7 @@ function QuadrantKey() {
     { q: 'low-high',  label: 'Low Power · High Interest',  action: 'Keep Informed' },
     { q: 'low-low',   label: 'Low Power · Low Interest',   action: 'Monitor' },
   ]
-  const bgs = { 'high-high': '#EFF6FF', 'high-low': '#F0FDF4', 'low-high': '#FDF4FF', 'low-low': '#F8FAFC' }
+  const bgs = { 'high-high': '#FAF3E0', 'high-low': '#F5F3EF', 'low-high': '#EEF4F8', 'low-low': '#FBFAF7' }
   return (
     <div className={styles.keyGrid}>
       {items.map(({ q, label, action }) => (

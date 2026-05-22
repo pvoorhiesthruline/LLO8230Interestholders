@@ -47,7 +47,7 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
             const y = Math.sin(rad) * 0.90
             return (
               <line key={deg} x1={-x} y1={-y} x2={x} y2={y}
-                stroke="rgba(11,18,32,0.05)" strokeWidth={0.010} />
+                stroke="rgba(44,40,35,0.05)" strokeWidth={0.010} />
             )
           })}
 
@@ -83,7 +83,7 @@ export default function BlastRadius({ stakeholders, programName, selectedId, onS
               fontSize={0.055}
               fontFamily="'Inter Tight', sans-serif"
               fontWeight="500"
-              fill="#4B5563"
+              fill="#6F6A60"
             >
               {programName.length > 18 ? programName.slice(0, 17) + '…' : programName}
             </text>

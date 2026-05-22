@@ -73,7 +73,7 @@
 
 .itemSelected {
   border-color: var(--cobalt) !important;
-  box-shadow: 0 0 0 2px rgba(45, 91, 227, 0.12);
+  box-shadow: 0 0 0 2px rgba(180, 146, 72, 0.22);
 }
 
 .itemMain {
@@ -321,7 +321,7 @@
 }
 
 .btnPrimary:hover:not(:disabled) {
-  background: #2451c7;
+  background: #946E24;
 }
 
 .btnPrimary:disabled {

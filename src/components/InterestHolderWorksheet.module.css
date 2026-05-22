@@ -48,11 +48,11 @@
 }
 
 .titleMain {
-  font-family: var(--font-tight);
+  font-family: var(--font-serif);
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--ink);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   line-height: 1;
 }
 
@@ -69,7 +69,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--forest-teal);
-  background: #ECFDF5;
+  background: #FAF3E0;
   border: 1px solid var(--neo-mint);
   border-radius: var(--radius-pill);
   padding: 1px 7px;
@@ -105,7 +105,7 @@
 
 .programInput:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(45, 91, 227, 0.15);
+  box-shadow: 0 0 0 3px rgba(180, 146, 72, 0.22);
 }
 
 .programBtn {
@@ -212,7 +212,7 @@
 .tabActive {
   color: var(--cobalt) !important;
   border-color: var(--cobalt) !important;
-  background: rgba(45, 91, 227, 0.06) !important;
+  background: rgba(207, 174, 112, 0.12) !important;
 }
 
 /* ── Chart panels ──────────────────────── */
@@ -234,9 +234,9 @@
 }
 
 .panelTitle {
-  font-family: var(--font-tight);
+  font-family: var(--font-serif);
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--ink);
   letter-spacing: -0.01em;
   margin-bottom: var(--space-1);

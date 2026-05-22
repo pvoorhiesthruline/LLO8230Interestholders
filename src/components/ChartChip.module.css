@@ -24,7 +24,7 @@
 
 .chip.selected {
   border-color: var(--cobalt);
-  box-shadow: 0 0 0 2px rgba(45, 91, 227, 0.25), var(--shadow);
+  box-shadow: 0 0 0 2px rgba(180, 146, 72, 0.32), var(--shadow);
 }
 
 .chip:active {
