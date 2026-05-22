@@ -1,20 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CHIP_COLORS, BLAST_RADIUS_LEVELS, BLAST_RADIUS_META } from '../data/palette'
 import styles from './StakeholderList.module.css'
 
 const ROLES = ['Primary', 'Secondary', 'Tertiary']
+const SCALE = Array.from({ length: 10 }, (_, i) => i + 1)
+
+const toScale = (v) => Math.max(1, Math.min(10, Math.round((v ?? 0.5) * 10)))
+const fromScale = (n) => n / 10
 
 function AddForm({ onAdd, onCancel }) {
-  const [name,  setName]  = useState('')
-  const [color, setColor] = useState(CHIP_COLORS[0].value)
-  const [role,  setRole]  = useState('Primary')
-  const [blast, setBlast] = useState('medium')
-  const [notes, setNotes] = useState('')
+  const [name,     setName]     = useState('')
+  const [color,    setColor]    = useState(CHIP_COLORS[0].value)
+  const [role,     setRole]     = useState('Primary')
+  const [blast,    setBlast]    = useState('medium')
+  const [notes,    setNotes]    = useState('')
+  const [power,    setPower]    = useState(5)
+  const [interest, setInterest] = useState(5)
 
   const submit = (e) => {
     e.preventDefault()
     if (!name.trim()) return
-    onAdd({ name: name.trim(), color, role, blastRadius: blast, notes })
+    onAdd({
+      name: name.trim(), color, role, blastRadius: blast, notes,
+      power: fromScale(power), interest: fromScale(interest),
+    })
   }
 
   return (
@@ -64,6 +73,22 @@ function AddForm({ onAdd, onCancel }) {
         </div>
       </div>
 
+      <div className={styles.formRow2}>
+        <div className={styles.formField}>
+          <label className={styles.label}>Power (1–10)</label>
+          <select className={styles.select} value={power} onChange={(e) => setPower(Number(e.target.value))}>
+            {SCALE.map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </div>
+
+        <div className={styles.formField}>
+          <label className={styles.label}>Interest (1–10)</label>
+          <select className={styles.select} value={interest} onChange={(e) => setInterest(Number(e.target.value))}>
+            {SCALE.map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </div>
+      </div>
+
       <textarea
         className={styles.textarea}
         placeholder="Notes (optional)"
@@ -81,16 +106,27 @@ function AddForm({ onAdd, onCancel }) {
 }
 
 function EditRow({ stakeholder, onUpdate, onRemove, onClose }) {
-  const [name,  setName]  = useState(stakeholder.name)
-  const [color, setColor] = useState(stakeholder.color)
-  const [role,  setRole]  = useState(stakeholder.role || 'Primary')
-  const [blast, setBlast] = useState(stakeholder.blastRadius)
-  const [notes, setNotes] = useState(stakeholder.notes || '')
+  const [name,     setName]     = useState(stakeholder.name)
+  const [color,    setColor]    = useState(stakeholder.color)
+  const [role,     setRole]     = useState(stakeholder.role || 'Primary')
+  const [blast,    setBlast]    = useState(stakeholder.blastRadius)
+  const [notes,    setNotes]    = useState(stakeholder.notes || '')
+  const [power,    setPower]    = useState(() => toScale(stakeholder.power))
+  const [interest, setInterest] = useState(() => toScale(stakeholder.interest))
+
+  // Keep dropdowns in sync if the grid chip is dragged while this form is open
+  useEffect(() => {
+    setPower(toScale(stakeholder.power))
+    setInterest(toScale(stakeholder.interest))
+  }, [stakeholder.power, stakeholder.interest])
 
   const save = (e) => {
     e.preventDefault()
     if (!name.trim()) return
-    onUpdate(stakeholder.id, { name: name.trim(), color, role, blastRadius: blast, notes })
+    onUpdate(stakeholder.id, {
+      name: name.trim(), color, role, blastRadius: blast, notes,
+      power: fromScale(power), interest: fromScale(interest),
+    })
     onClose()
   }
 
@@ -124,6 +160,20 @@ function EditRow({ stakeholder, onUpdate, onRemove, onClose }) {
             {BLAST_RADIUS_LEVELS.map((l) => (
               <option key={l} value={l}>{BLAST_RADIUS_META[l].label}</option>
             ))}
+          </select>
+        </div>
+      </div>
+      <div className={styles.formRow2}>
+        <div className={styles.formField}>
+          <label className={styles.label}>Power (1–10)</label>
+          <select className={styles.select} value={power} onChange={(e) => setPower(Number(e.target.value))}>
+            {SCALE.map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </div>
+        <div className={styles.formField}>
+          <label className={styles.label}>Interest (1–10)</label>
+          <select className={styles.select} value={interest} onChange={(e) => setInterest(Number(e.target.value))}>
+            {SCALE.map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>
       </div>
