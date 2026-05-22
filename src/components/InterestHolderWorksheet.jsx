@@ -139,7 +139,7 @@ export default function InterestHolderWorksheet() {
                 <div className={styles.panelHeader}>
                   <h2 className={styles.panelTitle}>Blast Radius</h2>
                   <p className={styles.panelSub}>
-                    Stakeholders grouped by proximity of impact from the program epicenter.
+                    Drag interest holders onto a ring to update their impact level.
                   </p>
                 </div>
                 <BlastRadius
@@ -147,6 +147,7 @@ export default function InterestHolderWorksheet() {
                   programName={programName}
                   selectedId={selectedId}
                   onSelect={handleSelect}
+                  onUpdate={update}
                 />
               </section>
             )}

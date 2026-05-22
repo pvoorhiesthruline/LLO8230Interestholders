@@ -85,3 +85,13 @@
   font-style: italic;
   padding-left: var(--space-1);
 }
+
+.dragHandle {
+  display: inline-flex;
+  cursor: grab;
+  transition: opacity 0.1s;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
